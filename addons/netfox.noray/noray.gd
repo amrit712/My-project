@@ -190,6 +190,7 @@ func _handle_commands(command: String, data: String):
 		on_pid.emit(pid)
 		_logger.debug("Saved PID: %s", [pid])
 	elif command == "connect":
+		print("NORAY RAW CONNECT DATA = [", data, "]")
 		var parts = data.split(":")
 		var host = parts[0]
 		var port = parts[1].to_int()
