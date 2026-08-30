@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://fyerrxgyyv1s"]
+
+[ext_resource type="Script" uid="uid://bn3y7a2ks7r7v" path="res://ARENA/animation.gd" id="1_jhar4"]
+
+[sub_resource type="Environment" id="Environment_6q7wx"]
+ambient_light_energy = 0.3
+glow_intensity = 2.0
+glow_bloom = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6q7wx"]
+radius = 2.5
+
+[node name="Animation" type="Node3D" unique_id=365501117]
+script = ExtResource("1_jhar4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=241007084]
+environment = SubResource("Environment_6q7wx")
+
+[node name="CollisionArea" type="Area3D" parent="." unique_id=830952808]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionArea" unique_id=1557115164]
+shape = SubResource("SphereShape3D_6q7wx")

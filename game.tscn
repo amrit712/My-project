@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://elst0xn32iil"]
+
+[ext_resource type="Script" uid="uid://ba7n8734axoka" path="res://game.gd" id="1_ryrav"]
+[ext_resource type="Script" uid="uid://bek44rm2rtmiu" path="res://CollisionManager.gd" id="4_vef74"]
+[ext_resource type="Script" uid="uid://bajhkyej6nx5v" path="res://AbilityOrbSpawner.gd" id="5_7jktm"]
+[ext_resource type="Script" uid="uid://bur5li52oy8wn" path="res://health_ui.gd" id="5_hve3p"]
+[ext_resource type="Script" uid="uid://bj560fs323iat" path="res://mana_ui.gd" id="6_mfdv2"]
+[ext_resource type="PackedScene" uid="uid://fyerrxgyyv1s" path="res://ARENA/Animation.tscn" id="6_ryrav"]
+
+[node name="game" type="Node3D" unique_id=2042731562]
+script = ExtResource("1_ryrav")
+
+[node name="CollisionManager" type="Node" parent="." unique_id=555598102]
+script = ExtResource("4_vef74")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1002167788]
+
+[node name="HealthUI" type="Control" parent="HUD" unique_id=1670911011]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_hve3p")
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/HealthUI" unique_id=2110862121]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 330.0
+offset_bottom = 57.0
+value = 100.0
+
+[node name="HealthNumber" type="Label" parent="HUD/HealthUI" unique_id=807916264]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+offset_transform_position = Vector2(400, 570)
+theme_override_font_sizes/font_size = 24
+text = "100"
+
+[node name="ManaUI" type="Control" parent="HUD" unique_id=1753583491]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_mfdv2")
+
+[node name="ManaBar" type="ProgressBar" parent="HUD/ManaUI" unique_id=1207614380]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 30.0
+offset_right = 700.0
+offset_bottom = 57.0
+value = 100.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=213328460]
+transform = Transform3D(1, 0, 0, 0, 0.017452383, 0.9998477, 0, -0.9998477, 0.017452383, 0, 12.814301, 0)
+light_energy = 1.524
+light_indirect_energy = 0.0
+
+[node name="AbilityOrbSpawner" type="Node3D" parent="." unique_id=1694054340]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 14.58, 0)
+script = ExtResource("5_7jktm")
+orb_scene = ExtResource("6_ryrav")

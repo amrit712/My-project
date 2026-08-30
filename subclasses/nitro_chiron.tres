@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CarSubclassData" format=3 uid="uid://dg1fo2ku4kyti"]
+
+[ext_resource type="PackedScene" uid="uid://ble2lvkivols7" path="res://bodies/chiron.tscn" id="1_7vfxp"]
+[ext_resource type="Script" uid="uid://ddkluporv1fgd" path="res://car_system/car_subclass_data.gd" id="1_yuk1k"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_yuk1k")
+subclass_id = "Chiron"
+display_name = "Chiron"
+body_scene = ExtResource("1_7vfxp")
+override_body_position = true
+body_rotation_correction = Vector3(0, 90, 0)
+metadata/_custom_type_script = "uid://ddkluporv1fgd"

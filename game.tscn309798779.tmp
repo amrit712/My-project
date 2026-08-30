@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://elst0xn32iil"]
+
+[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://cpl3cu5l2o0uo" path="res://car.gd" id="2_e2o6t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m416c"]
+albedo_texture = ExtResource("1_80nbo")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_i54wu"]
+material = SubResource("StandardMaterial3D_m416c")
+size = Vector3(50, 1, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_e2o6t"]
+data = PackedVector3Array(-25, 0.5, 25, 25, 0.5, 25, -25, -0.5, 25, 25, 0.5, 25, 25, -0.5, 25, -25, -0.5, 25, 25, 0.5, -25, -25, 0.5, -25, 25, -0.5, -25, -25, 0.5, -25, -25, -0.5, -25, 25, -0.5, -25, 25, 0.5, 25, 25, 0.5, -25, 25, -0.5, 25, 25, 0.5, -25, 25, -0.5, -25, 25, -0.5, 25, -25, 0.5, -25, -25, 0.5, 25, -25, -0.5, -25, -25, 0.5, 25, -25, -0.5, 25, -25, -0.5, -25, 25, 0.5, 25, -25, 0.5, 25, 25, 0.5, -25, -25, 0.5, 25, -25, 0.5, -25, 25, 0.5, -25, -25, -0.5, 25, 25, -0.5, 25, -25, -0.5, -25, 25, -0.5, 25, 25, -0.5, -25, -25, -0.5, -25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6q7wx"]
+size = Vector3(1.5, 0.5, 3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_feb5d"]
+points = PackedVector3Array(-0.77380955, 0.29750717, -1.5235113, 0.7322902, -0.25, 1.396838, -0.77380955, 0.29750717, 1.5235113, 0.79746515, 0.29761904, -1.5235113, -0.7084808, -0.25, -1.396838, 0.7322902, -0.25, -1.396838, -0.7084808, -0.25, 1.396838, 0.79746515, 0.29761904, 1.5235113)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lbsx"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i54wu"]
+material = SubResource("StandardMaterial3D_0lbsx")
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.25
+radial_segments = 12
+
+[node name="game" type="Node3D" unique_id=2042731562]
+script = ExtResource("2_e2o6t")
+
+[node name="ground" type="MeshInstance3D" parent="." unique_id=1644403286]
+mesh = SubResource("BoxMesh_i54wu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ground" unique_id=1119787231]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground/StaticBody3D" unique_id=1581031566]
+shape = SubResource("ConcavePolygonShape3D_e2o6t")
+
+[node name="car" type="VehicleBody3D" parent="." unique_id=214539215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8323135, 0)
+script = ExtResource("2_e2o6t")
+
+[node name="car-body" type="MeshInstance3D" parent="car" unique_id=1746199620]
+mesh = SubResource("BoxMesh_6q7wx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="car" unique_id=312580327]
+shape = SubResource("ConvexPolygonShape3D_feb5d")
+
+[node name="FRONT-RIGHT" type="VehicleWheel3D" parent="car" unique_id=2008137781]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+use_as_steering = true
+suspension_stiffness = 50.0
+damping_compression = 1.9
+damping_relaxation = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="car/FRONT-RIGHT" unique_id=1676541787]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_i54wu")
+
+[node name="FRONT-LEFT" type="VehicleWheel3D" parent="car" unique_id=351214612]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+use_as_steering = true
+suspension_stiffness = 50.0
+damping_compression = 1.9
+damping_relaxation = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="car/FRONT-LEFT" unique_id=950216732]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_i54wu")
+
+[node name="BACK-RIGHT" type="VehicleWheel3D" parent="car" unique_id=1170453476]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+use_as_traction = true
+suspension_stiffness = 50.0
+damping_compression = 1.9
+damping_relaxation = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="car/BACK-RIGHT" unique_id=1675085713]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_i54wu")
+
+[node name="BACK-LEFT" type="VehicleWheel3D" parent="car" unique_id=140796891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+use_as_traction = true
+suspension_stiffness = 50.0
+damping_compression = 1.9
+damping_relaxation = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="car/BACK-LEFT" unique_id=330356181]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_i54wu")
+
+[node name="Camera3D" type="Camera3D" parent="car" unique_id=2070017045]
+transform = Transform3D(0.9992811, 0.016275406, -0.03423963, 0.005102473, 0.83720237, 0.54686946, 0.037566025, -0.54665107, 0.8365174, 0.020079613, 1.9749603, 2.6623635)

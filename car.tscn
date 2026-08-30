@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://yfwfun1l0v67"]
+
+[ext_resource type="Script" uid="uid://cpl3cu5l2o0uo" path="res://CarController.gd" id="1_jvnmj"]
+[ext_resource type="Script" uid="uid://dsoeluo65a4q0" path="res://CarCollision.gd" id="2_o1gbi"]
+[ext_resource type="Script" uid="uid://6fdo2jcaxaop" path="res://CameraShake.gd" id="3_7vkmi"]
+[ext_resource type="Script" uid="uid://b8baht2hv5ho5" path="res://Health.gd" id="4_vhqvg"]
+[ext_resource type="Script" uid="uid://yghcqo2156kf" path="res://mana.gd" id="5_iqgqw"]
+[ext_resource type="Script" uid="uid://domvj5uj6r32w" path="res://Status effects.gd" id="6_7dbv8"]
+[ext_resource type="Script" uid="uid://bup1abnqj1460" path="res://Passive base.gd" id="7_eefhx"]
+[ext_resource type="Script" uid="uid://2vw4lvhc0jps" path="res://dash.gd" id="8_mjudg"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_eow3j"]
+points = PackedVector3Array(-0.77380955, 0.29750717, -1.5235113, 0.7322902, -0.25, 1.396838, -0.77380955, 0.29750717, 1.5235113, 0.79746515, 0.29761904, -1.5235113, -0.7084808, -0.25, -1.396838, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="car" type="VehicleBody3D" unique_id=77017096 groups=["cars"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1814303, 0)
+collision_layer = 2
+collision_mask = 3
+mass = 900.0
+continuous_cd = true
+engine_force = 1024.0
+brake = 15.0
+steering = 0.006981317
+script = ExtResource("1_jvnmj")
+car_class_name = "NITRO"
+max_rpm = 5500.0
+max_torque = 6000.0
+brake_force = 600.0
+throttle_smoothing = 12.0
+car_class = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=675017010]
+shape = SubResource("ConvexPolygonShape3D_eow3j")
+script = ExtResource("2_o1gbi")
+
+[node name="FRONT-RIGHT" type="VehicleWheel3D" parent="." unique_id=96569812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 2)
+brake = 15.0
+steering = 0.006981317
+use_as_steering = true
+wheel_radius = 0.35
+wheel_rest_length = 0.25
+wheel_friction_slip = 10.0
+suspension_stiffness = 40.0
+suspension_max_force = 10000.0
+damping_compression = 60.0
+damping_relaxation = 60.0
+
+[node name="FRONT-LEFT" type="VehicleWheel3D" parent="." unique_id=649703110]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+brake = 15.0
+steering = 0.006981317
+use_as_steering = true
+wheel_radius = 0.35
+wheel_rest_length = 0.25
+wheel_friction_slip = 10.0
+suspension_travel = 0.5
+suspension_stiffness = 50.0
+suspension_max_force = 10000.0
+damping_compression = 60.0
+damping_relaxation = 60.0
+
+[node name="BACK-RIGHT" type="VehicleWheel3D" parent="." unique_id=2090552115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+engine_force = 1024.0
+brake = 15.0
+use_as_traction = true
+wheel_radius = 0.35
+wheel_rest_length = 0.25
+wheel_friction_slip = 10.0
+suspension_travel = 0.5
+suspension_stiffness = 50.0
+suspension_max_force = 10000.0
+damping_compression = 60.0
+damping_relaxation = 60.0
+
+[node name="BACK-LEFT" type="VehicleWheel3D" parent="." unique_id=954304846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+engine_force = 1024.0
+brake = 15.0
+use_as_traction = true
+wheel_radius = 0.35
+wheel_rest_length = 0.25
+wheel_friction_slip = 10.0
+suspension_travel = 0.5
+suspension_stiffness = 50.0
+suspension_max_force = 10000.0
+damping_compression = 60.0
+damping_relaxation = 60.0
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2022127280]
+transform = Transform3D(-0.99972785, -0.0080200005, 0.021907419, 0.005519793, 0.83107316, 0.5561357, -0.022666877, 0.55610526, -0.8308027, 0.1694436, 2.0497422, -2.9007473)
+
+[node name="CameraShake" type="Node3D" parent="Camera3D" unique_id=331054389]
+script = ExtResource("3_7vkmi")
+
+[node name="Health" type="Node" parent="." unique_id=188233684]
+script = ExtResource("4_vhqvg")
+
+[node name="Mana" type="Node" parent="." unique_id=398055976]
+script = ExtResource("5_iqgqw")
+
+[node name="StatusEffects" type="Node" parent="." unique_id=1076341769]
+script = ExtResource("6_7dbv8")
+
+[node name="PassiveBase" type="Node" parent="." unique_id=1151065737]
+script = ExtResource("7_eefhx")
+
+[node name="Ability1" type="Node" parent="." unique_id=666185134]
+
+[node name="Ability2" type="Node" parent="." unique_id=368903393]
+
+[node name="Ultimate" type="Node" parent="." unique_id=68489329]
+
+[node name="BodyMeshSlot" type="Node3D" parent="." unique_id=1638146327]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="ExplosionSpawnPoint" type="Marker3D" parent="." unique_id=1424646279]
+
+[node name="Dash" type="Node" parent="." unique_id=440208229]
+script = ExtResource("8_mjudg")

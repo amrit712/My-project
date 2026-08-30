@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CarClassData" format=3 uid="uid://bonbtqbsly11v"]
+
+[ext_resource type="Script" uid="uid://duubnldtfi2n6" path="res://car_system/car_class_data.gd" id="1_ax634"]
+[ext_resource type="Script" uid="uid://ddkluporv1fgd" path="res://car_system/car_subclass_data.gd" id="2_ic8fe"]
+[ext_resource type="Resource" uid="uid://jvxehsmygvuf" path="res://subclasses/nitro_f1.tres" id="3_ic8fe"]
+[ext_resource type="Resource" uid="uid://dg1fo2ku4kyti" path="res://subclasses/nitro_chiron.tres" id="4_jwgdf"]
+
+[resource]
+script = ExtResource("1_ax634")
+car_class_id = "NITRO"
+display_name = "Nitro"
+base_max_torque = 9000.0
+base_max_rpm = 10000.0
+subclasses = Array[ExtResource("2_ic8fe")]([ExtResource("3_ic8fe"), ExtResource("4_jwgdf")])
+metadata/_custom_type_script = "uid://duubnldtfi2n6"
