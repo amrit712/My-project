@@ -109,6 +109,20 @@ func join_game(host_oid: String) -> Error:
 
 	print("Connected to Noray.")
 
+	# Every Noray participant needs their own identity.
+	print("Registering client with Noray...")
+
+	error = Noray.register_host()
+
+	if error != OK:
+		print("Client register_host failed: ", error)
+		return error
+
+	await Noray.on_pid
+
+	print("Client OID: ", Noray.oid)
+	print("Client PID received.")
+
 	print("Registering client remote address...")
 
 	error = await Noray.register_remote()
@@ -122,7 +136,7 @@ func join_game(host_oid: String) -> Error:
 
 	print("Requesting connection to host OID: ", host_oid)
 
-	return join_noray_game(host_oid)
+	return Noray.connect_nat(host_oid)
 
 
 func leave_game() -> void:
@@ -204,8 +218,3 @@ func register_noray_host() -> Error:
 	print("Noray local port: ", Noray.local_port)
 
 	return OK
-	
-func join_noray_game(host_oid: String) -> Error:
-	print("Connecting to Noray host: ", host_oid)
-
-	return Noray.connect_nat(host_oid)
