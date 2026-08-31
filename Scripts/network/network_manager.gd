@@ -19,32 +19,53 @@ func _ready() -> void:
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 	Noray.on_connect_nat.connect(_on_noray_connect)
 	Noray.on_connect_relay.connect(_on_noray_connect)
-func _on_noray_connect(address: String, port: int) -> Error:
-	print("Noray gave us connection target: ", address, ":", port)
+func _on_noray_connect(address: String, port: int) -> void:
+	print("Connection target: ", address, ":", port)
 
-	return await _connect_to_noray_peer(address, port)
+	var error := await _connect_to_noray_peer(address, port)
+
+	if error != OK:
+		print("Noray connection setup failed: ", error)
+func join_noray_game(host_oid: String) -> Error:
+	print("Connecting to Noray host: ", host_oid)
+
+	var error := Noray.connect_nat(host_oid)
+
+	if error != OK:
+		print("Noray connect_nat failed: ", error)
+		return error
+
+	print("Noray NAT connection request sent.")
+
+	return OK
+
 func _connect_to_noray_peer(address: String, port: int) -> Error:
-	print("Performing Noray UDP handshake...")
+	print("Connecting to Noray target: ", address, ":", port)
 
 	var udp := PacketPeerUDP.new()
 
 	var error := udp.bind(Noray.local_port)
 
 	if error != OK:
-		print("UDP bind failed: ", error)
+		print("Failed to bind UDP to Noray local port: ", error)
 		return error
+
+	print("UDP bound to local port: ", Noray.local_port)
 
 	udp.set_dest_address(address, port)
 
+	print("Performing Noray UDP handshake...")
+
 	error = await PacketHandshake.over_packet_peer(udp)
 
-	udp.close()
-
-	if error != OK:
+	if error != OK and error != ERR_BUSY:
 		print("Noray handshake failed: ", error)
+		udp.close()
 		return error
 
-	print("Noray handshake successful.")
+	print("Noray UDP handshake successful.")
+
+	udp.close()
 
 	var peer := ENetMultiplayerPeer.new()
 
@@ -102,42 +123,14 @@ func host_game() -> Error:
 func join_game(host_oid: String) -> Error:
 	print("Starting Noray client setup...")
 
-	var error: int = await connect_to_noray()
+	var error := await connect_to_noray()
 
 	if error != OK:
 		return error
 
 	print("Connected to Noray.")
 
-	# Every Noray participant needs their own identity.
-	print("Registering client with Noray...")
-
-	error = Noray.register_host()
-
-	if error != OK:
-		print("Client register_host failed: ", error)
-		return error
-
-	await Noray.on_pid
-
-	print("Client OID: ", Noray.oid)
-	print("Client PID received.")
-
-	print("Registering client remote address...")
-
-	error = await Noray.register_remote()
-
-	if error != OK:
-		print("Client register_remote failed: ", error)
-		return error
-
-	print("Client remote registration successful.")
-	print("Client Noray local port: ", Noray.local_port)
-
-	print("Requesting connection to host OID: ", host_oid)
-
-	return Noray.connect_nat(host_oid)
-
+	return await join_noray_game(host_oid)
 
 func leave_game() -> void:
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
