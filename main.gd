@@ -21,7 +21,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		print("Joining Noray host...")
 
 		var error := await NetworkManager.join_game(
-			"kiXEFlL1Bi5dHrI7iFaap"
+			"K-MBl1Qa0KZJ46eVbv9VA"
 		)
 
 		if error != OK:
