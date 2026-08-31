@@ -190,10 +190,22 @@ func _handle_commands(command: String, data: String):
 		on_pid.emit(pid)
 		_logger.debug("Saved PID: %s", [pid])
 	elif command == "connect":
-		print("NORAY RAW CONNECT DATA = [", data, "]")
+		print("NORAY CONNECT COMMAND")
+		print("RAW DATA: <", data, ">")
+		print("RAW DATA LENGTH: ", data.length())
+
 		var parts = data.split(":")
+
+		print("PARTS: ", parts)
+		print("PART COUNT: ", parts.size())
+
+		if parts.size() < 2:
+			print("ERROR: Noray sent an invalid connect target!")
+			return
+
 		var host = parts[0]
 		var port = parts[1].to_int()
+
 		_logger.debug("Received connect command to %s:%s", [host, port])
 		on_connect_nat.emit(host, port)
 	elif command == "connect-relay":

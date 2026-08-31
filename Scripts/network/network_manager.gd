@@ -29,13 +29,13 @@ func _on_noray_connect(address: String, port: int) -> void:
 func join_noray_game(host_oid: String) -> Error:
 	print("Connecting to Noray host: ", host_oid)
 
-	var error := Noray.connect_relay(host_oid)
+	var error := Noray.connect_nat(host_oid)
 
 	if error != OK:
-		print("Noray connect_relay failed: ", error)
+		print("Noray connect_nat failed: ", error)
 		return error
 
-	print("Noray relay connection request sent.")
+	print("Noray NAT connection request sent.")
 
 	return OK
 
@@ -129,16 +129,6 @@ func join_game(host_oid: String) -> Error:
 		return error
 
 	print("Connected to Noray.")
-
-	print("Registering client remote address...")
-
-	error = await Noray.register_remote()
-
-	if error != OK:
-		print("Client register_remote failed: ", error)
-		return error
-
-	print("Client Noray local port: ", Noray.local_port)
 
 	return await join_noray_game(host_oid)
 
